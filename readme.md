@@ -2,9 +2,9 @@
 
 ## Información del Estudiante
 
-- **Nombre:** [Tu nombre completo aquí]
-- **Carrera:** [Tu carrera]
-- **Fecha de inicio:** [Fecha]
+- **Nombre:** Braulio Lenin Castillo Puentestar
+- **Carrera:** PUCETEC Desarrollo de software
+- **Fecha de inicio:** 13 de junio del 2026
 
 ---
 
