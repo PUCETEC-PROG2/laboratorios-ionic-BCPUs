@@ -10,7 +10,7 @@ const RepoItem: React.FC<Repository>= (repository) =>{
             <IonItem>
               <IonThumbnail slot="start">
                 <img 
-                src={repository.avatarUrl} 
+                src={repository.owner.avatar_url} 
                 alt='Avatar'
                 />
               </IonThumbnail>

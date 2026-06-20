@@ -1,9 +1,27 @@
-import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import React from 'react';
+import { IonContent, IonHeader, IonList, IonPage, IonTitle, IonToolbar, useIonViewWillEnter } from '@ionic/react';
 import './Tab1.css';
-import { repositoryList } from '../interfaces/Repository';
 import RepoItem from '../components/RepoItem';
+import { Repository } from '../interfaces/Repository';
+import { fetchRepositories } from '../services/GithubService';
+
 
 const Tab1: React.FC = () => {
+  const [repositoryList, setRepoitoryList] = React.useState<Repository[]>([]);
+
+  const fetchRepos = async() => {
+    try{
+      const repos=await fetchRepositories();
+      setRepoitoryList(repos);
+    } catch(error){
+      console.error('Error obteniendo repositorios:', error);
+    }
+  };
+
+  useIonViewWillEnter(()=>{
+    fetchRepos();
+  });
+
   return (
     <IonPage>
       <IonHeader>
@@ -21,7 +39,7 @@ const Tab1: React.FC = () => {
         <IonList>
 
           {repositoryList.map((repo)=>(
-            <RepoItem{...repo}/>
+            <RepoItem{...repo} key={repo.id}/>
           ))}
  
         </IonList>
