@@ -17,9 +17,11 @@ const RepoItem: React.FC<Repository>= (repository) =>{
               <IonLabel>
                 <h3>{repository.name}</h3>
                 <p>{repository.description}</p>
-                <p>
+                {repository.language&&(
+                  <p>
                     <strong>Lenguaje:</strong>{repository.language}
-                </p>
+                  </p>
+                )}
               </IonLabel>
             </IonItem>
             <IonItemOptions>

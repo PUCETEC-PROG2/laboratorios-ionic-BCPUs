@@ -1,7 +1,25 @@
-import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import React from 'react';
+import { IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonContent, IonHeader, IonPage, IonText, IonTitle, IonToolbar, useIonViewWillEnter } from '@ionic/react';
 import './Tab3.css';
+import { GithubUser } from '../interfaces/GithubUser';
+import { fetchUserInfo } from '../services/GithubService';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const Tab3: React.FC = () => {
+  const [userInfo,setUserInfo]= React.useState<GithubUser|null>(null);
+  const [loading, setLoading]= React.useState(false);
+  const[errorMsg, setErrorMsg]= React.useState("");
+
+  useIonViewWillEnter(()=>{
+    setLoading(true);
+    fetchUserInfo().then((user)=>{
+      setUserInfo(user);
+    }).catch((error)=>{
+      setErrorMsg("Error al cargar la informacion del usuario" + error);
+    }).finally(()=>{
+      setLoading(false);
+    })
+  });
   return (
     <IonPage>
       <IonHeader>
@@ -16,22 +34,23 @@ const Tab3: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <div className="card-container">
-          <IonCard className="card">
+          {userInfo&&(
+            <IonCard className="card">
             <img
-              src="https://avatars.githubusercontent.com/u/191403266?v=4&size=64"
-              alt="imagen de perfil"
+              src={userInfo?.avatar_url}
+              alt={userInfo?.name}
             ></img>
-          </IonCard>
-          <IonCardHeader>
-            <IonCardTitle>Braulio Castillo</IonCardTitle>
-            <IonCardSubtitle>blcastillop</IonCardSubtitle>
-          </IonCardHeader>
-          <IonCardContent>
-            <p>Estudiante de desarrollo de software</p>
-            <p>Universidad Catolica del Ecuador</p>
-          </IonCardContent>
-
+            <IonCardHeader>
+              <IonCardTitle>{userInfo?.name}</IonCardTitle>
+              <IonCardSubtitle>{userInfo?.login}</IonCardSubtitle>
+            </IonCardHeader>
+            <IonCardContent>
+              <p>{userInfo?.bio}</p>
+            </IonCardContent>
+          </IonCard>)}
+          {errorMsg != '' && <IonText color="danger">{errorMsg}</IonText>}
         </div>
+        {loading&&<LoadingSpinner></LoadingSpinner>}
       </IonContent>
     </IonPage>
   );
