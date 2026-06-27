@@ -16,13 +16,14 @@ const Tab2: React.FC = () => {
   const [loading, setLoading]=React.useState(false);
   const [errorMsg, setErrorMsg]= React.useState('');
 
-  setLoading(true);
-
 const saveRepository = async () => {
   if(repositoryData.name.trim()===''){
     setErrorMsg('el nombre del repositorio es obligatorio');
     return;
   }
+  
+  setLoading(true);
+
   createRepository(repositoryData)
     .then(() => {
       history.push('/tab1');
