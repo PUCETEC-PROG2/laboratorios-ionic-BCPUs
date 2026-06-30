@@ -61,3 +61,4 @@ export const fetchUserInfo= async(): Promise<GithubUser|null> => {
         throw new Error(`${(error as Error).message}`);
     }
 }
+

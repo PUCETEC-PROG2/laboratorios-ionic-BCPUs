@@ -26,6 +26,7 @@ const saveRepository = async () => {
 
   createRepository(repositoryData)
     .then(() => {
+      alert('Repositorio creado con éxito!')
       history.push('/tab1');
     })
     .catch((error) => {
