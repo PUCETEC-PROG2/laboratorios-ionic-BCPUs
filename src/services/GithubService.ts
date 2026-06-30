@@ -62,3 +62,22 @@ export const fetchUserInfo= async(): Promise<GithubUser|null> => {
     }
 }
 
+export const updateRepository = async (owner: string, repoName: string, data: RepositoryPayload): Promise<Repository> => {
+    try {
+        const response = await apiClient.patch(`/repos/${owner}/${repoName}`, data);
+        if (response.status !== 200) throw new Error(`${response.statusText}`);
+        return response.data;
+    } catch (error) {
+        throw new Error(`${(error as Error).message}`);
+    }
+}
+
+export const deleteRepository = async (owner: string, repoName: string): Promise<boolean> => {
+    try {
+        const response = await apiClient.delete(`/repos/${owner}/${repoName}`);
+        if (response.status !== 204) throw new Error(`${response.statusText}`);
+        return true;
+    } catch (error) {
+        throw new Error(`${(error as Error).message}`);
+    }
+}
